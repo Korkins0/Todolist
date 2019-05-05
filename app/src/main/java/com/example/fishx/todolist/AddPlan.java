@@ -16,12 +16,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
  public class AddPlan extends AppCompatActivity {
 
     EditText planName;
     EditText date;
-
+    String planAdi;
+    Date deadLine;
+    final planVeriKaynagi pvk= new planVeriKaynagi(this);
     Calendar c;
     private  DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -54,6 +57,26 @@ import java.util.Calendar;
                 date.setText(dayOfMonth+"/"+month+"/"+year);
             }
         };
+
+    }
+
+
+    public void addPlantoDbButton(View view){
+
+         planAdi=planName.getText().toString();
+
+        plan plan=new plan();
+
+        if(planName!=null){
+            pvk.ac();
+            //plan=pvk.planOlustur(planAdi);
+            pvk.planOlusturDb(planAdi);
+            pvk.kapat();
+        }
+
+
+
+
 
     }
 
