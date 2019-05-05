@@ -13,7 +13,7 @@ public class MyPlans extends AppCompatActivity {
 
 
     ListView listView;
-    static List<plan> plans = new ArrayList<plan>();
+    static List<String> plans = new ArrayList<String>();
     List<String> planadlari=new ArrayList<String>();
     planVeriKaynagi pvk= new planVeriKaynagi(this);
 
@@ -29,18 +29,20 @@ public class MyPlans extends AppCompatActivity {
         plans=pvk.listele();
 
 
-        if (true)
+        if (!plans.isEmpty())
         {
-        for (int i=0;i<=plans.size();i++){
 
-            planadlari.add(plans.get(i).planadi);
 
-        }
-            ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,planadlari);
 
-            //CustomListAdapter customAdapter = new CustomListAdapter(this,R.layout.customlistitem, planadlari);
 
-            listView.setAdapter(arrayAdapter);
+            //ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,plans);
+
+            //listView.setAdapter(arrayAdapter);
+
+            CustomListAdapter customAdapter = new CustomListAdapter(this,R.layout.customlistitem, plans);
+
+            listView.setAdapter(customAdapter);
+
 
         }
 

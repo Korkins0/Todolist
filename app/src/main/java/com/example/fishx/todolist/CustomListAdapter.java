@@ -13,13 +13,9 @@ import java.util.List;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
 
-    //sil
-    public CustomListAdapter(Context context, int textViewResourceId , List<String> list )
-    {
-        super(context, textViewResourceId, list);
-    }
 
-   /* private Context mContext;
+
+    private Context mContext;
     private int id;
     private List<String> items ;
 
@@ -52,5 +48,5 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         return mView;
     }
-*/
+
 }

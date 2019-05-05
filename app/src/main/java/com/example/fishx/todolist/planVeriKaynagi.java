@@ -47,15 +47,15 @@ public class planVeriKaynagi {
 
     }
 
-    public List<plan> listele(){
+    public List<String> listele(){
 
         plan planim = new plan();
         String kolonlar[]={"id","planadi","deadline"};
-        List<plan> planList=new ArrayList<plan>();
+        List<String> planadiList=new ArrayList<String>();
         Cursor cursor=db.query(false,"plann",kolonlar,null,null,null,null,null,null,null);
         cursor.moveToFirst();
 
-        while (!cursor.isLast()){
+        while (!cursor.isAfterLast()){
             int id=cursor.getInt(0);
             String planadi=cursor.getString(1);
             Date deadline = Calendar.getInstance().getTime();//buraya dön tarih şu an current date alıyor bunu seçilen tarihe çevir.
@@ -65,10 +65,11 @@ public class planVeriKaynagi {
         */
             planim.setPlanadi(planadi);
             planim.setDeadline(deadline);
-            planList.add(planim);
+            planadiList.add(planim.getPlanadi());
             cursor.moveToNext();
+      //commit satırıı
         }
-        return planList;
+        return planadiList;
     }
 
 }
