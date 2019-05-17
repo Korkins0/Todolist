@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,6 +74,9 @@ import java.util.Date;
             pvk.planOlusturDb(planAdi);
             pvk.kapat();
         }
+
+        Toast.makeText(getApplicationContext(), "Aktivite Başarıyla Eklendi.", Toast.LENGTH_SHORT).show();
+        finish();
 
 
 

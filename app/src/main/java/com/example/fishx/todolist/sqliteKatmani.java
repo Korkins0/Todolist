@@ -13,8 +13,10 @@ public class sqliteKatmani extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql=" create table plann (id integer primary key autoincrement, planadi text, deadline date)";
-        db.execSQL(sql);
+        String createPlansql=" create table if not exists plann (id integer primary key autoincrement, planadi text, deadline text)";
+        db.execSQL(createPlansql);
+        String createAyrintisql="create table if not exists ayrinti (planadi text,planicerigi text,plandurumu boolean,deadline text ,id integer,foreign key(id) references plann(id))";
+        db.execSQL(createAyrintisql);
     }
 
     @Override

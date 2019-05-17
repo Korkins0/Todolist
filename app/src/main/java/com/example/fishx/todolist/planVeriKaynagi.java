@@ -23,6 +23,7 @@ public class planVeriKaynagi {
 
     public void ac(){
         db=bdb.getWritableDatabase();
+
     }
 
     public void kapat(){
@@ -44,7 +45,19 @@ public class planVeriKaynagi {
         val.put("planadi",p.getPlanadi());
         //val.put("deadline",deadline);
         db.insert("plann",null,val);
-
+    }
+    public void detayOlusturDb(String icerik,String planadi){
+        detail detail=new detail();
+        detail.setIcerik(icerik);
+        detail.setPlanadi(planadi);
+        detail.setDurum(false);
+        //ac bunu sonra aqq kaanı tepeye de deadline al p.setDeadline(deadline);
+        ContentValues val = new ContentValues();
+        val.put("planadi",detail.getPlanadi());
+        val.put("planicerigi",detail.getIcerik());
+        val.put("plandurumu",detail.getDurum());
+        //val.put("deadline",deadline);
+        db.insert("ayrinti",null,val);
     }
 
     public List<String> listele(){
@@ -70,6 +83,60 @@ public class planVeriKaynagi {
       //commit satırıı
         }
         return planadiList;
+    }
+       public ArrayList<detail> listeleAyrinti(){
+
+        detail detayim = new detail();
+        String kolonlar[]={"planadi","planicerigi","plandurumu","deadline","id"};
+        ArrayList<detail> detailsList=new ArrayList<detail>();
+        Cursor cursor=db.query(false,"ayrinti",kolonlar,null,null,null,null,null,null,null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+
+            String planadi=cursor.getString(0);
+            String planicerigi=cursor.getString(1);
+            boolean plandurumu= cursor.getInt(2) > 0;
+            Date deadline = Calendar.getInstance().getTime();//buraya dön tarih şu an current date alıyor bunu seçilen tarihe çevir.
+            /* System.out.println("Current time => " + deadline);
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(deadline);
+        */
+            detayim.setPlanadi(planadi);
+            detayim.setIcerik(planicerigi);
+            detayim.setDurum(plandurumu);
+            detailsList.add(detayim);
+            cursor.moveToNext();
+
+        }
+        return detailsList;
+    }
+
+
+
+    public List<plan> listeleplan(){
+
+        plan planim = new plan();
+        String kolonlar[]={"id","planadi","deadline"};
+        List<plan> planList=new ArrayList<plan>();
+        Cursor cursor=db.query(false,"plann",kolonlar,null,null,null,null,null,null,null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            int id=cursor.getInt(0);
+            String planadi=cursor.getString(1);
+            Date deadline = Calendar.getInstance().getTime();//buraya dön tarih şu an current date alıyor bunu seçilen tarihe çevir.
+            /* System.out.println("Current time => " + deadline);
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(deadline);
+        */
+            planim.setPlanadi(planadi);
+            planim.setDeadline(deadline);
+            planList.add(planim);
+            cursor.moveToNext();
+      //commit satırıı
+        }
+        return planList;
     }
 
 }

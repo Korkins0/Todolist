@@ -7,6 +7,7 @@ public class plan {
     Date deadline;
     int id;
 
+
     public String getPlanadi(){
         return planadi;
     }
