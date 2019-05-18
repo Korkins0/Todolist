@@ -84,16 +84,16 @@ public class planVeriKaynagi {
         }
         return planadiList;
     }
-       public ArrayList<detail> listeleAyrinti(){
+       public ArrayList<detail> listeleAyrinti(String planadii){
 
-        detail detayim = new detail();
+
         String kolonlar[]={"planadi","planicerigi","plandurumu","deadline","id"};
         ArrayList<detail> detailsList=new ArrayList<detail>();
         Cursor cursor=db.query(false,"ayrinti",kolonlar,null,null,null,null,null,null,null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
-
+            detail detayim = new detail();
             String planadi=cursor.getString(0);
             String planicerigi=cursor.getString(1);
             boolean plandurumu= cursor.getInt(2) > 0;
@@ -102,10 +102,11 @@ public class planVeriKaynagi {
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
             String formattedDate = df.format(deadline);
         */
+            if (planadii.equals(planadi)){
             detayim.setPlanadi(planadi);
             detayim.setIcerik(planicerigi);
             detayim.setDurum(plandurumu);
-            detailsList.add(detayim);
+            detailsList.add(detayim);}
             cursor.moveToNext();
 
         }

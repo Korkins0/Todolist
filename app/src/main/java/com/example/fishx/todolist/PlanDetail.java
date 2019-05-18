@@ -43,21 +43,21 @@ public class PlanDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
         Intent intent=getIntent();
-
-
-        db.ac();
-        planDetails=db.listeleAyrinti();
-
-
-        for (int i=0;i<planDetails.size();i++){
-            mTitle.add(planDetails.get(i).icerik);
-        }
-
         addDetail=findViewById(R.id.button4);
         planName=intent.getStringExtra("name");
         textView=findViewById(R.id.textView2);
         listView=findViewById(R.id.detailList);
         textView.setText(planName+" Plan");
+
+
+        db.ac();
+        planDetails=db.listeleAyrinti(planName);
+
+
+        for (int i=0;i<planDetails.size();i++){
+            mTitle.add(planDetails.get(i).getIcerik());
+        }
+
 
 
 
