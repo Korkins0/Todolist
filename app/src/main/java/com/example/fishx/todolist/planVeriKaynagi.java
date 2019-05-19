@@ -36,6 +36,22 @@ public class planVeriKaynagi {
         // ac bunu sonra aqq kaanı tepeye de deadline al p.setDeadline(deadline);
         return p;
     }
+
+    public void planSilDb(String planadi){
+
+        String planname=planadi;
+        db.delete("plann","planadi= '"+planname+"'" ,null);
+
+    }
+    public void detayGuncelleDb(String clickedName,Boolean clickedDurumu){
+
+        if (clickedDurumu)
+            db.execSQL("UPDATE ayrinti SET plandurumu=0 WHERE planicerigi='"+clickedName+"'");
+        else
+            db.execSQL("UPDATE ayrinti SET plandurumu=1 WHERE planicerigi='"+clickedName+"'");
+
+    }
+
     public void planOlusturDb(String planadi){
         plan p=new plan();
         p.setPlanadi(planadi);
@@ -62,13 +78,14 @@ public class planVeriKaynagi {
 
     public List<String> listele(){
 
-        plan planim = new plan();
+
         String kolonlar[]={"id","planadi","deadline"};
         List<String> planadiList=new ArrayList<String>();
         Cursor cursor=db.query(false,"plann",kolonlar,null,null,null,null,null,null,null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
+            plan planim = new plan();
             int id=cursor.getInt(0);
             String planadi=cursor.getString(1);
             Date deadline = Calendar.getInstance().getTime();//buraya dön tarih şu an current date alıyor bunu seçilen tarihe çevir.

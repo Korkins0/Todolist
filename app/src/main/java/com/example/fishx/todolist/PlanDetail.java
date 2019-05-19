@@ -2,6 +2,7 @@ package com.example.fishx.todolist;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,8 +28,10 @@ import java.util.List;
 
 public class PlanDetail extends AppCompatActivity {
 
+
     String m_Text;
     Context context = this;
+    ArrayList<Boolean> m_boolean=new ArrayList<Boolean>();
     ArrayList<String> mTitle=new ArrayList<String>();
     int images[]={R.drawable.check,R.drawable.x};
     planVeriKaynagi db = new planVeriKaynagi(context);
@@ -52,10 +55,12 @@ public class PlanDetail extends AppCompatActivity {
 
         db.ac();
         planDetails=db.listeleAyrinti(planName);
-
+        db.kapat();
 
         for (int i=0;i<planDetails.size();i++){
             mTitle.add(planDetails.get(i).getIcerik());
+            m_boolean.add(planDetails.get(i).getDurum());
+
         }
 
 
@@ -69,22 +74,20 @@ public class PlanDetail extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position==0){
+                db.ac();
 
-                }
-                if (position==1){
-
-                }
-                if (position==2){
-
-                }
+                //planDetails.get(position).setDurum(!planDetails.get(position).getDurum());
+                db.detayGuncelleDb(planDetails.get(position).getIcerik(),planDetails.get(position).getDurum());
+                db.kapat();
+                finish();
+                startActivity(getIntent());
 
             }
         });
 
 
 
-        db.kapat();
+
 
 
 
@@ -118,7 +121,11 @@ public class PlanDetail extends AppCompatActivity {
             TextView myTitle=row.findViewById(R.id.baslik);
 
 
-            images.setImageResource(rImg[position%2]);
+            if (m_boolean.get(position)){
+            images.setImageResource(rImg[0]);}
+            else {
+            images.setImageResource(rImg[1]);}
+
             myTitle.setText(rTitle.get(position));
 
 
